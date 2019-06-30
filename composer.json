@@ -1,0 +1,9 @@
+{
+    "name": "thefirstorder/retriever",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^8.2"
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
