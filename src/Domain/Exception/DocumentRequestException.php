@@ -9,5 +9,7 @@ class DocumentRequestException extends RetrieverException
     {
         $e = new self('The specified handler is invalid.');
         $e->related = $handler;
+
+        return $e;
     }
 }
