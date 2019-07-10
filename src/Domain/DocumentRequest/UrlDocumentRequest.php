@@ -11,9 +11,6 @@ class UrlDocumentRequest extends BaseDocumentRequest
     /** @var string  */
     private const TYPE = 'url';
 
-    /** @var array */
-    private $parsedUri;
-
     public function __construct(string $uri)
     {
         if (false === filter_var($uri, FILTER_VALIDATE_URL)) {
