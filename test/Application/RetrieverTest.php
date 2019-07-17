@@ -63,5 +63,4 @@ class RetrieverTest extends TestCase
         $mockRequest->getDocumentType()->willReturn('invalid');
         return $mockRequest;
     }
-
 }
