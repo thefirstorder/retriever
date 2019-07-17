@@ -5,5 +5,6 @@ namespace Retriever\Domain;
 
 interface DocumentRequest
 {
+    public function getDocumentHandler(): string;
     public function getDocumentType(): string;
 }
