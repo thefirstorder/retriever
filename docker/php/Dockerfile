@@ -11,3 +11,8 @@ RUN mkdir /app
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN composer --version && php -v
+RUN apt-get install  -y wget
+RUN wget https://phar.phpunit.de/phpunit-6.5.phar
+RUN chmod +x phpunit-6.5.phar
+RUN mv phpunit-6.5.phar /usr/local/bin/phpunit
+RUN phpunit --version
