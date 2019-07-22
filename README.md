@@ -18,11 +18,8 @@ a file:
 
 `docker-compose run --rm cli bin/retriever retrieve http://google.com --include-metadata > google.com.txt`
 
-### Up And Running
-`docker-compose up`
+### To Login on container Terminal
+`docker-compose run --rm cli /bin/bash`
 
-### Para loguearse en la terminal del container
-`docker-compose run cli /bin/bash`
-
-### Para correr los tests
-`docker-compose run cli phpunit test`
+### Running tests
+`docker-compose run --rm cli vendor/bin/phpunit test`

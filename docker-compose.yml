@@ -4,6 +4,6 @@ services:
     build: ./docker/php
     working_dir: /app
     volumes:
-      - ./:/app
+      - ./:/app:delegated
     stdin_open: true
     tty: true
