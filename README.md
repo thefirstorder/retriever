@@ -17,3 +17,9 @@ A simple way to save the content for now is to redirect the output to
 a file:
 
 `docker-compose run --rm cli bin/retriever retrieve http://google.com --include-metadata > google.com.txt`
+
+### To Login on container Terminal
+`docker-compose run --rm cli /bin/bash`
+
+### Running tests
+`docker-compose run --rm cli vendor/bin/phpunit test`
