@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Retriever\Infrastructure\Command;
 
 use Retriever\Application\Retriever;
+use Retriever\Application\Saver;
 use Retriever\Domain\DocumentRequest\UrlDocumentRequest;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,9 +19,10 @@ class RetrieveCommand extends Command
     /** @var Retriever */
     private $retriever;
 
-    public function __construct(Retriever $retriever)
+    public function __construct(Retriever $retriever, Saver $saver)
     {
         $this->retriever = $retriever;
+        $this->saver = $saver;
 
         parent::__construct();
     }
@@ -31,12 +33,14 @@ class RetrieveCommand extends Command
             ->setDescription('Retrieves a document from the Web')
             ->setHelp('It allows you to request any publicly available online resource.')
             ->addArgument('uri', InputArgument::REQUIRED, 'Uri to retrieve')
+            ->addArgument('save', InputArgument::OPTIONAL, 'save results to local db')
             ->addOption(
                 'include-metadata',
                 'i',
                 InputOption::VALUE_NONE,
                 'Include the Document Metadata in the output'
             );
+            
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -47,8 +51,12 @@ class RetrieveCommand extends Command
         if ($input->getOption('include-metadata')) {
             $this->outputDocumentMetadata($output, $fetchedDocument);
         }
-
-        $output->write($fetchedDocument->getDocumentContent());
+        
+        $content = $fetchedDocument->getDocumentContent();
+        if ($input->getArgument('save')) {
+            $this->saver->save($uri, $fetchedDocument);
+        }
+        $output->write($content);
     }
 
     /**

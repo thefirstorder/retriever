@@ -4,6 +4,7 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Retriever\Application\Retriever;
+use Retriever\Application\Saver;
 use Retriever\Infrastructure\Command\RetrieveCommand;
 use Retriever\Infrastructure\Url\UrlOnlyDocumentFetcherFactory;
 use Symfony\Component\Console\Application;
@@ -14,7 +15,8 @@ $commandLoader = new FactoryCommandLoader(
         'retrieve' => function () {
             return new RetrieveCommand(
                 new Retriever(
-                    new UrlOnlyDocumentFetcherFactory()
+                    new UrlOnlyDocumentFetcherFactory(),
+                    new Saver() // here we can declare who is the specific saver
                 )
             );
         }
