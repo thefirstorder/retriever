@@ -6,10 +6,10 @@ namespace Retriever\Domain\DocumentRequest;
 use Retriever\Domain\BaseDocumentRequest;
 use Retriever\Domain\Exception\DocumentRequestException;
 
-class UrlDocumentRequest extends BaseDocumentRequest
+final class UrlDocumentRequest extends BaseDocumentRequest
 {
     /** @var string  */
-    private const TYPE = 'url';
+    public const TYPE = 'url';
 
     public function __construct(string $uri)
     {

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Retriever\Domain;
 
-class BaseDocumentRequest implements DocumentRequest
+abstract class BaseDocumentRequest implements DocumentRequest
 {
     /** @var string */
     private $documentType;
@@ -11,7 +11,7 @@ class BaseDocumentRequest implements DocumentRequest
     /** @var string */
     private $documentHandler;
 
-    public function __construct(string $documentHandler, string $documentType)
+    protected function __construct(string $documentHandler, string $documentType)
     {
         $this->documentHandler = $documentHandler;
         $this->documentType = $documentType;
