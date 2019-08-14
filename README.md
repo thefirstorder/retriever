@@ -2,24 +2,24 @@
 Resource scrapper
 
 ### Installation
-`docker-compose run --rm cli composer install`
+`make install`
 
 ### Usage
 The basic usage of the `retriever` console command is with the 
 `retrieve` action that expects an url to fetch:
  
-`docker-compose run --rm cli bin/retriever retrieve http://google.com`
+`make retrieve uri=http://google.com`
 
 You could ask `Retriever` to actually include the Document Metadata 
-on top of the content, with the flag `--include-metadata`.
+on top of the content, with the make targe `retrieve-metadata`.
 
 A simple way to save the content for now is to redirect the output to 
 a file:
 
-`docker-compose run --rm cli bin/retriever retrieve http://google.com --include-metadata > google.com.txt`
+`make retrieve-metadata uri=http://google.com > google.com.txt`
 
 ### To Login on container Terminal
-`docker-compose run --rm cli /bin/bash`
+`make bash`
 
 ### Running tests
-`docker-compose run --rm cli vendor/bin/phpunit test`
+`make test`
