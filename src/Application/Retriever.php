@@ -8,6 +8,7 @@ use Exception;
 use Retriever\Domain\DocumentFetcher;
 use Retriever\Domain\DocumentFetcherFactory;
 use Retriever\Domain\DocumentRequest;
+use Retriever\Domain\DocumentStorage;
 use Retriever\Domain\FetchedDocument;
 use Retriever\Domain\Exception\DocumentFetcherException;
 use Retriever\Domain\Exception\RetrieverException;
@@ -17,9 +18,15 @@ class Retriever
     /** @var DocumentFetcher */
     private $fetcherFactory;
 
-    public function __construct(DocumentFetcherFactory $documentFetcherFactory)
-    {
+    /** @var DocumentStorage */
+    private $storage;
+
+    public function __construct(
+        DocumentFetcherFactory $documentFetcherFactory,
+        DocumentStorage $storage
+    ) {
         $this->fetcherFactory = $documentFetcherFactory;
+        $this->storage = $storage;
     }
 
     public function retrieve(DocumentRequest $request): FetchedDocument
@@ -27,6 +34,7 @@ class Retriever
         try {
             $fetcher = $this->fetcherFactory->buildForDocumentRequest($request);
             $fetchedDocument = $fetcher->fetchDocument($request);
+            $this->storage->store($fetchedDocument);
 
             return $fetchedDocument;
         } catch (DocumentFetcherException $e) {

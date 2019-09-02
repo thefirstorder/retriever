@@ -10,8 +10,12 @@ use Prophecy\Prophecy\ObjectProphecy;
 use Retriever\Domain\DocumentFetcher;
 use Retriever\Domain\DocumentFetcherFactory;
 use Retriever\Domain\DocumentRequest;
+use Retriever\Domain\DocumentStorage;
 use Retriever\Domain\Exception\DocumentFetcherException;
 use Retriever\Domain\Exception\RetrieverException;
+use Retriever\Domain\FetchedDocument;
+use Retriever\Domain\Stub\DocumentFetcherStub;
+use Retriever\Domain\Stub\DocumentRequestStub;
 
 class RetrieverTest extends TestCase
 {
@@ -21,10 +25,17 @@ class RetrieverTest extends TestCase
     /** @var DocumentFetcherFactory */
     private $factory;
 
+    /** @var DocumentStorage */
+    private $storage;
+
     public function setUp(): void
     {
         $this->factory = $this->prophesize(DocumentFetcherFactory::class);
-        $this->retriever = new Retriever($this->factory->reveal());
+        $this->storage = $this->prophesize(DocumentStorage::class);
+        $this->retriever = new Retriever(
+            $this->factory->reveal(),
+            $this->storage->reveal()
+        );
     }
 
     public function test_it_throws_valid_exception_when_cant_get_a_fetcher()
@@ -52,6 +63,17 @@ class RetrieverTest extends TestCase
         $this->factory->buildForDocumentRequest(Argument::any())->willReturn($mockFetcher->reveal());
 
         $this->retriever->retrieve($mockRequest->reveal());
+    }
+
+    public function test_it_tries_to_store_the_document_after_fetching()
+    {
+        $this->factory
+            ->buildForDocumentRequest(Argument::any())
+            ->willReturn(DocumentFetcherStub::makeStub());
+
+        $this->storage->store(Argument::type(FetchedDocument::class))->shouldBeCalled();
+
+        $this->retriever->retrieve(DocumentRequestStub::single());
     }
 
     /**
