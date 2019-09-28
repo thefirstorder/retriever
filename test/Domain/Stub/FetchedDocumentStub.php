@@ -8,6 +8,11 @@ use Retriever\Domain\FetchedDocument;
 
 class FetchedDocumentStub
 {
+    private function __construct()
+    {
+        // This class shouldn't be instantiable
+    }
+
     public static function single(): FetchedDocument
     {
         return new BaseFetchedDocument(
