@@ -30,7 +30,7 @@ class GuzzleDocumentFetcher implements DocumentFetcher
                 $document->getDocumentHandler(),
                 $response->getBody()->getContents(),
                 $response->getHeaders() + [
-                    'Host' => [$document->getDocumentHandler()]
+                    'Host' => $document->getDocumentHandler()
                 ]
             );
 
