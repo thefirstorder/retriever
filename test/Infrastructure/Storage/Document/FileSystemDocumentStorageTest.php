@@ -62,8 +62,13 @@ class FileSystemDocumentStorageTest extends TestCase
         );
         $this->storage->store(FetchedDocumentStub::single());
 
-        $this->assertEquals(
-            'Test Content',
+        $this->assertEquals(<<<DOCUMENT
+---
+Host: 'http://example.com/document'
+---
+Test Content
+DOCUMENT
+            ,
             $this->filesystem->read($existingFilename)
         );
     }
@@ -79,7 +84,13 @@ class FileSystemDocumentStorageTest extends TestCase
         $this->storage->store(FetchedDocumentStub::single());
 
         $this->assertEquals(
-            'Test Content',
+            <<<DOCUMENT
+---
+Host: 'http://example.com/document'
+---
+Test Content
+DOCUMENT
+            ,
             $this->filesystem->read($filename)
         );
     }

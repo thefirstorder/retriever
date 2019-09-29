@@ -6,6 +6,9 @@ cli = $(docker-run) cli
 install:
 	$(cli) composer install
 
+require:
+	$(cli) composer require $(package)
+
 bash:
 	$(cli) bash
 
