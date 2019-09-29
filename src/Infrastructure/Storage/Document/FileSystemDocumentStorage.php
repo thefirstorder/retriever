@@ -8,6 +8,7 @@ use Retriever\Domain\DocumentStorage;
 use Retriever\Domain\FetchedDocument;
 use Retriever\Infrastructure\Storage\Document\FilenameInflector\BasicFilenameInflector;
 use Retriever\Infrastructure\Storage\Exception\CantStoreFileException;
+use Symfony\Component\Yaml\Yaml;
 
 class FileSystemDocumentStorage implements DocumentStorage
 {
@@ -40,7 +41,16 @@ class FileSystemDocumentStorage implements DocumentStorage
 
         $this->fileSystem->put(
             $filename,
-            $document->getDocumentContent()
+            $this->prepareContent($document)
         );
+    }
+
+    private function prepareContent(FetchedDocument $document)
+    {
+        return
+            "---\n" .
+            Yaml::dump((array)$document->getMetadata()) .
+            "---\n" .
+            $document->getDocumentContent();
     }
 }

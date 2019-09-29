@@ -34,7 +34,7 @@ class HostPathBasedFilenameInflector implements FilenameInflector
 
     private function processPath($parsedUrl)
     {
-        if ($parsedUrl['path'] === null || strlen($parsedUrl['path']) === 1) {
+        if (!isset($parsedUrl['path']) || strlen($parsedUrl['path']) === 1) {
             $path = 'index.html';
         } else {
             $path = substr($parsedUrl['path'], 1);

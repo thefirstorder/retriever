@@ -21,7 +21,8 @@ $commandLoader = new FactoryCommandLoader(
                     new UrlOnlyDocumentFetcherFactory(),
                     new FileSystemDocumentStorage(
                         new Filesystem(new Local(dirname(__DIR__).'/data')),
-                        new HostPathBasedFilenameInflector()
+                        new HostPathBasedFilenameInflector(),
+                        true
                     )
                 )
             );
