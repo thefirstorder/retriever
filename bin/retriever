@@ -3,8 +3,12 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use Retriever\Application\Retriever;
 use Retriever\Infrastructure\Command\RetrieveCommand;
+use Retriever\Infrastructure\Storage\Document\FilenameInflector\HostPathBasedFilenameInflector;
+use Retriever\Infrastructure\Storage\Document\FileSystemDocumentStorage;
 use Retriever\Infrastructure\Url\UrlOnlyDocumentFetcherFactory;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
@@ -14,7 +18,11 @@ $commandLoader = new FactoryCommandLoader(
         'retrieve' => function () {
             return new RetrieveCommand(
                 new Retriever(
-                    new UrlOnlyDocumentFetcherFactory()
+                    new UrlOnlyDocumentFetcherFactory(),
+                    new FileSystemDocumentStorage(
+                        new Filesystem(new Local(dirname(__DIR__).'/data')),
+                        new HostPathBasedFilenameInflector()
+                    )
                 )
             );
         }

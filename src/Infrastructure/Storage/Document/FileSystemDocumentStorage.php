@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Retriever\Infrastructure\Storage\Document;
 
-use League\Flysystem\FileExistsException;
 use League\Flysystem\Filesystem;
 use Retriever\Domain\DocumentStorage;
 use Retriever\Domain\FetchedDocument;
